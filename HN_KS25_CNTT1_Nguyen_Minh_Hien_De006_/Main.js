@@ -262,7 +262,7 @@ let filterByPrice = (obArray) => {
         }
         break;
     }
-    let result = obArray.filter(c => c.price >= lowerPrice && c.price <= higherPrice);
+    let result = obArray.filter(c => c.price >= Number (lowerPrice) && c.price <= Number(higherPrice));
     if(result.length === 0){
         alert("Không có sách trong khoảng giá này");
     }else{
