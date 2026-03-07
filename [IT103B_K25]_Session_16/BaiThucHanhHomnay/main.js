@@ -5,6 +5,8 @@ let employees = [
   { id: 3, fullname: "Lê Văn C", email: "c.le@example.com", dob: "1990-12-07", role: "Trưởng phòng" },
 ];
 
+let editId = null;
+
 let form = document.querySelector(".form-section form");
 
 let nameItem = document.getElementById("fullName");
@@ -96,8 +98,10 @@ function validateForm() {
 
 form.addEventListener("submit", function (e) {
   e.preventDefault();
+
   if (!validateForm()) return;
-  if (editId) {
+
+  if (editId !== null) {
 
     const emp = employees.find(emp => emp.id === editId);
 
@@ -108,7 +112,7 @@ form.addEventListener("submit", function (e) {
 
     editId = null;
 
-    form.querySelector("button[type='submit']").textContent = "Thêm Nhân Viên";
+    form.querySelector("button[type='submit']").textContent = "Thêm nhân viên";
 
   } else {
 
@@ -128,24 +132,12 @@ form.addEventListener("submit", function (e) {
 });
 
 employItem.addEventListener("click", function (e) {
-  if (e.target.classList.contains("btn-delete")) {
-
-    const id = Number(e.target.dataset.id);
-
-    employees = employees.filter(emp => emp.id !== id);
-
-    renderAllEmployees(employees);
-  }
-});
-
-employItem.addEventListener("click", function (e) {
 
   const id = Number(e.target.dataset.id);
 
   if (e.target.classList.contains("btn-delete")) {
 
     employees = employees.filter(emp => emp.id !== id);
-
     renderAllEmployees(employees);
   }
 
@@ -161,16 +153,12 @@ employItem.addEventListener("click", function (e) {
     editId = id;
 
     form.querySelector("button[type='submit']").textContent = "Cập nhật nhân viên";
-    form.querySelector("button[type='reset']").textContent = "Hủy";
-
   }
-  if(e.target.querySelector("button[type='reset']")){
-    renderAllEmployees(employees);
-    form.querySelector("button[type='submit']").textContent = "Thêm nhân viên";
-    form.querySelector("button[type='reset']").textContent = "Nhập lại";
-    return;
-  }
+});
 
+form.addEventListener("reset", function () {
+  editId = null;
+  form.querySelector("button[type='submit']").textContent = "Thêm nhân viên";
 });
 
 renderAllEmployees(employees);
