@@ -27,7 +27,7 @@ document.querySelector(".btn-add").addEventListener("click", (e) => {
         alert("Tên không được để trống !");
         return;
     }
-    if (nameItem.value.length < 2) {
+    if (nameItem.value.length <= 2) {
         alert("Tên phải đủ dài hơn 2 ký tự");
         return;
     }
