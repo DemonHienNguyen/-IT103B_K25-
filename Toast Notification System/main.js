@@ -36,10 +36,10 @@ const typeData = {
 
 function createToast(type, posistion = "top-right") {
 
-    toastList.style.top = "";
-    toastList.style.bottom = "";
-    toastList.style.left = "";
-    toastList.style.right = "";
+    // toastList.style.top = "";
+    // toastList.style.bottom = "";
+    // toastList.style.left = "";
+    // toastList.style.right = "";
     const data = typeData[type];
     const toast = document.createElement("div");
     toast.className = `toast ${type}`;
@@ -56,36 +56,36 @@ function createToast(type, posistion = "top-right") {
     `;
     toastList.appendChild(toast);
 
-    const valiPos = ["top-right","top-left","bottom-right","bottom-left"];
-    if(!valiPos.includes(posistion)){
-        posistion === "top-right";
-    }
+    // const valiPos = ["top-right","top-left","bottom-right","bottom-left"];
+    // if(!valiPos.includes(posistion)){
+    //     posistion = "top-right";
+    // }
 
-    if (posistion === "top-right") {
-        toastList.style.top = "20px";
-        toastList.style.right = "20px";
-        toastList.classList.remove("bottom-left");
-        toastList.classList.remove("top-left");
-    }
-    if (posistion === "top-left") {
-        toastList.style.top = "20px";
-        toastList.style.left = "20px";
-        toastList.classList.remove("bottom-left");
-        toastList.classList.add("top-left");
-    }
-    if (posistion === "bottom-right") {
-        toastList.style.bottom = "20px";
-        toastList.style.right = "20px";
-        toastList.classList.remove("bottom-left");
-        toastList.classList.remove("top-left");
-    }
-    if (posistion === "bottom-left") {
-        toastList.style.bottom = "20px";
-        toastList.style.left = "20px";
-        toastList.classList.add("bottom-left");
-        toastList.classList.remove("top-left");
+    // if (posistion === "top-right") {
+    //     toastList.style.top = "20px";
+    //     toastList.style.right = "20px";
+    //     toastList.classList.remove("bottom-left");
+    //     toastList.classList.remove("top-left");
+    // }
+    // if (posistion === "top-left") {
+    //     toastList.style.top = "20px";
+    //     toastList.style.left = "20px";
+    //     toastList.classList.remove("bottom-left");
+    //     toastList.classList.add("top-left");
+    // }
+    // if (posistion === "bottom-right") {
+    //     toastList.style.bottom = "20px";
+    //     toastList.style.right = "20px";
+    //     toastList.classList.remove("bottom-left");
+    //     toastList.classList.remove("top-left");
+    // }
+    // if (posistion === "bottom-left") {
+    //     toastList.style.bottom = "20px";
+    //     toastList.style.left = "20px";
+    //     toastList.classList.add("bottom-left");
+    //     toastList.classList.remove("top-left");
         
-    }
+    // }
 
     localStorage.setItem("lastToast", JSON.stringify({
         type,
@@ -103,7 +103,7 @@ function createToast(type, posistion = "top-right") {
     }
     setTimeout(() => {
         toast.remove();
-        showNextToast();
+        // showNextToast();
     }, data.duration);
 
 }
@@ -135,7 +135,39 @@ btnInfor.addEventListener("mousedown", () => {
 window.onload = () =>{
     const data = JSON.parse(localStorage.getItem("lastToast"));
     if(data){
-        createToast(data.type, data.posistion);
         posistion.value = data.posistion;
+        posistion.dispatchEvent(new Event("change"));
+        createToast(data.type);
     }
 }
+posistion.addEventListener("change", (e) => {
+    toastList.style.top = "";
+    toastList.style.bottom = "";
+    toastList.style.left = "";
+    toastList.style.right = "";
+    let key  = e.target.value;
+    if(key === "top-right"){
+        toastList.style.top = "20px";
+        toastList.style.right = "20px";
+        toastList.classList.remove("bottom-left");
+        toastList.classList.remove("top-left");
+    }
+    if (key === "top-left") {
+        toastList.style.top = "20px";
+        toastList.style.left = "20px";
+        toastList.classList.remove("bottom-left");
+        toastList.classList.add("top-left");
+    }
+    if (key === "bottom-right") {
+        toastList.style.bottom = "20px";
+        toastList.style.right = "20px";
+        toastList.classList.remove("bottom-left");
+        toastList.classList.remove("top-left");
+    }
+    if (key === "bottom-left") {
+        toastList.style.bottom = "20px";
+        toastList.style.left = "20px";
+        toastList.classList.add("bottom-left");
+        toastList.classList.remove("top-left");
+    }
+});
