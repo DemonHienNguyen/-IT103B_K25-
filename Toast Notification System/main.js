@@ -7,7 +7,7 @@ let btnerror = document.getElementById("btn--error");
 let btnInfor = document.getElementById("btn--inform");
 
 // Cách cải biến nhiếu muốn nhiều thông báo mà mỗi lần mình sẽ thêm phần tử vào: queue
-const MAX_COUNT = 5;
+const MAX_COUNT = 6;
 const list = [];
 
 let toastList = document.getElementById("toastContainer");
@@ -56,36 +56,34 @@ function createToast(type, posistion = "top-right") {
     `;
     toastList.appendChild(toast);
 
-    // const valiPos = ["top-right","top-left","bottom-right","bottom-left"];
-    // if(!valiPos.includes(posistion)){
-    //     posistion = "top-right";
-    // }
 
-    // if (posistion === "top-right") {
-    //     toastList.style.top = "20px";
-    //     toastList.style.right = "20px";
-    //     toastList.classList.remove("bottom-left");
-    //     toastList.classList.remove("top-left");
-    // }
-    // if (posistion === "top-left") {
-    //     toastList.style.top = "20px";
-    //     toastList.style.left = "20px";
-    //     toastList.classList.remove("bottom-left");
-    //     toastList.classList.add("top-left");
-    // }
-    // if (posistion === "bottom-right") {
-    //     toastList.style.bottom = "20px";
-    //     toastList.style.right = "20px";
-    //     toastList.classList.remove("bottom-left");
-    //     toastList.classList.remove("top-left");
-    // }
-    // if (posistion === "bottom-left") {
-    //     toastList.style.bottom = "20px";
-    //     toastList.style.left = "20px";
-    //     toastList.classList.add("bottom-left");
-    //     toastList.classList.remove("top-left");
+    // Ap dung cho reload trang 
+    const valiPos = ["top-right","top-left","bottom-right","bottom-left"];
+    if(!valiPos.includes(posistion)){
+        posistion = "top-right";
+    }
+
+    if (posistion === "top-right") {
+        toastList.style.top = "20px";
+        toastList.style.right = "20px";
+    }
+    if (posistion === "top-left") {
+        toastList.style.top = "20px";
+        toastList.style.left = "20px";
+        toastList.classList.remove("bottom-left");
+        toastList.classList.add("top-left");
+    }
+    if (posistion === "bottom-right") {
+        toastList.style.bottom = "20px";
+        toastList.style.right = "20px";
+    }
+    if (posistion === "bottom-left") {
+        toastList.style.bottom = "20px";
+        toastList.style.left = "20px";
+        toastList.classList.add("bottom-left");
+        toastList.classList.remove("top-left");
         
-    // }
+    }
 
     localStorage.setItem("lastToast", JSON.stringify({
         type,
@@ -137,7 +135,7 @@ window.onload = () =>{
     if(data){
         posistion.value = data.posistion;
         posistion.dispatchEvent(new Event("change"));
-        createToast(data.type);
+        createToast(data.type, data.posistion);
     }
 }
 posistion.addEventListener("change", (e) => {
